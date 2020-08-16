@@ -6,19 +6,31 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity @Table(name="Customers")
 public class Customer {
 	@Id
+	@NotEmpty(message = "Không để trống tên đăng nhập")
 	String id;
+	@Length(min=6, max =60, message = "Mật khải phải từ 6 đến 20 kí tự" )
 	String password;
+	@NotEmpty
 	String fullname;
+	@NotEmpty(message = "Không để trống email")
+	@Email(message = "Email không hợp lệ")
 	String email;
 	String photo;
 	Boolean activated;
 	Boolean admin;
-	
+	//bo link qua don hang khi truy xuat ajax
+	@JsonIgnore
 	@OneToMany(mappedBy = "customer")
 	List<Order> orders;
 

@@ -10,5 +10,7 @@ public interface CustomerDAO {
 	Customer create(Customer entity);
 	void update(Customer entity);
 	Customer delete(String id);
+	long getPageCount(int pageSize);
+	List<Customer> getPage(int pageNo, int pageSize);
 
 }

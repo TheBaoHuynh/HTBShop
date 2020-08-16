@@ -13,7 +13,7 @@
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li class="dropdown"><a class="dropdown-toggle"
-				data-toggle="dropdown" href="#">Tài khoản<span class="caret"></span></a>
+				data-toggle="dropdown" href="#">Tài khoản<span class="caret "></span></a>
 				<c:choose>
 					<c:when test="${empty sessionScope.user}">
 						<ul class="dropdown-menu">

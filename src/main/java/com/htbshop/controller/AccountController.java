@@ -9,9 +9,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,15 +63,18 @@ public class AccountController {
 	public String login(Model model, @RequestParam("id") String id, @RequestParam("pw") String pw,
 			@RequestParam(value = "rm", defaultValue = "false") boolean rm) {
 		Customer user = dao.findById(id);
+		
 		if (user == null) {
-			model.addAttribute("msg", "Sai ten dang nhap");
-		} else if (!pw.equals(user.getPassword())) {
-			model.addAttribute("msg", "Sai mat khau");
+			model.addAttribute("msg", "Tên đăng nhập hoặc mật khẩu không đúng");
+		} else if (!BCrypt.checkpw(pw, user.getPassword())) {
+			model.addAttribute("msg", "Tên đăng nhập hoặc mật khẩu không đúng");
 		} else if (!user.getActivated()) {
-			model.addAttribute("msg", "Tai khoan khong ton tai");
+			model.addAttribute("msg", "Tài khoản không tồn tại, bạn chưa có tài khoản?");
 		} else {
-			model.addAttribute("msg", "Dang nhap thanh cong");
+			model.addAttribute("msg", "Đăng nhập thành công");
 			session.setAttribute("user", user);
+			
+		
 			// ghi nho bang cookie
 			if (rm == true) {
 				cookie.create("userId", user.getId(), 30);
@@ -77,11 +83,16 @@ public class AccountController {
 				cookie.delete("userId");
 				cookie.delete("pass");
 			}
-			//quay lai trang duoc bao ve ( neu co)
+			
+			// quay lai trang duoc bao ve ( neu co)
 			String backUri = (String) session.getAttribute("back-uri");
-			if(backUri != null) {
+			if (backUri != null) {
 				return "redirect:" + backUri;
 			}
+			if(user.getAdmin() == true) {
+				return "redirect:../admin/home/index";
+			}
+			return "redirect:/home/index";
 		}
 		return "account/login";
 	}
@@ -100,9 +111,19 @@ public class AccountController {
 	}
 
 	@PostMapping("/account/register")
-	public String register(Model model, @ModelAttribute("form") Customer user,
+	public String register(Model model, @Validated @ModelAttribute("form") Customer user, BindingResult errors,
 			@RequestParam("photo_file") MultipartFile file)
 			throws IllegalStateException, IOException, MessagingException {
+		if (errors.hasErrors()) {
+			model.addAttribute("msg", "Vui lòng nhập đúng yêu cầu");
+			return "account/register";
+		} else {
+			Customer user2 = dao.findById(user.getId());
+			if (user2 != null) {
+				model.addAttribute("msg", "Tên đã được sử dụng");
+				return "account/register";
+			}
+		}
 		if (file.isEmpty()) {
 			user.setPhoto("user.png");
 		} else {
@@ -111,10 +132,12 @@ public class AccountController {
 			file.transferTo(f);
 			user.setPhoto(f.getName());
 		}
+		String hash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
+		user.setPassword(hash);
 		user.setActivated(false);
-		user.setActivated(false);
+		user.setAdmin(false);
 		dao.create(user);
-		model.addAttribute("msg", "Đăng kí thành công");
+		model.addAttribute("msg", "Đăng kí thành công, vào email để kích hoạt tài khoản");
 
 		String form = "16130294@st.hcmuaf.edu.vn";
 		String to = user.getEmail();
@@ -185,8 +208,8 @@ public class AccountController {
 		}
 		return "redirect:/account/login";
 	}
-	
-	//cap nhat tai khoan
+
+	// cap nhat tai khoan
 	@GetMapping("/account/edit")
 	public String edit(Model model) {
 		Customer user = (Customer) session.getAttribute("user");
@@ -195,10 +218,8 @@ public class AccountController {
 	}
 
 	@PostMapping("/account/edit")
-	public String edit(Model model, 
-			@ModelAttribute("form") Customer user,
-			@RequestParam("photo_file") MultipartFile file)
-			throws IllegalStateException, IOException {
+	public String edit(Model model, @ModelAttribute("form") Customer user,
+			@RequestParam("photo_file") MultipartFile file) throws IllegalStateException, IOException {
 		if (!file.isEmpty()) {
 			String dir = app.getRealPath("/static/images/customers");
 			File f = new File(dir, file.getOriginalFilename());

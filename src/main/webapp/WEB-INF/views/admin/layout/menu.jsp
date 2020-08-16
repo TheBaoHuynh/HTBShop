@@ -23,7 +23,7 @@
 					<li><a href="/admin/revenue/customer">Danh số theo khách hàng</a></li>
 					<li><a href="/admin/revenue/year">Danh số theo năm</a></li>
 					<li><a href="/admin/revenue/quarter">Danh số theo quý</a></li>
-					<li><a href="/admin/revenue/mounth">Danh số theo tháng</a></li>
+					<li><a href="/admin/revenue/month">Danh số theo tháng</a></li>
 				</ul>
 			</li>
 			<li><a href="#">Tài khoản</a></li>

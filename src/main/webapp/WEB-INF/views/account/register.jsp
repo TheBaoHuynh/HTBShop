@@ -5,15 +5,19 @@
 <form:form action="/account/register" modelAttribute="form" enctype="multipart/form-data">
 <div class="form-group">
 	<label>Tên đăng nhập</label> <form:input path="id" class="form-control"/>
+	<form:errors path="id"></form:errors>
 </div>
 <div class="form-group">
 	<label>Mật khẩu</label> <form:input path="password" class="form-control"/>
+	<form:errors path="password"></form:errors>
 </div>
 <div class="form-group">
 	<label>Họ và tên</label> <form:input path="fullname" class="form-control"/>
+	<form:errors path="fullname"></form:errors>
 </div>
 <div class="form-group">
 	<label>Email</label> <form:input path="email" class="form-control"/>
+	<form:errors path="email"></form:errors>
 </div>
 <div class="form-group">
 	<label>Ảnh</label>
@@ -22,6 +26,6 @@
 </div>
 
 <div class="form-group">
-	<button class="btn-login">Đăng kí</button>
+	<button class="btn btn-default">Đăng kí</button>
 </div>
 </form:form>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Trang quản trị</title>
+<title>HTBStore-Trang quản trị</title>
 </head>
 <body>
 

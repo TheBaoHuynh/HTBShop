@@ -3,10 +3,12 @@
 
 <div class="panel panel-default">
 	<div class="panel-body">
-		<form:form action="${base}/index" modelAttribute="entity" enctype="multipart/form-data">
+		<form:form action="${base}/index" modelAttribute="entity"
+			enctype="multipart/form-data">
 			<div class="form-group">
 				<label>Mã sản phẩm</label>
-				<form:input path="id" class="form-control" readonly="true" placeholder=""/>
+				<form:input path="id" class="form-control" readonly="true"
+					placeholder="" />
 			</div>
 			<div class="form-group">
 				<label>Tên sản phẩm</label>
@@ -26,7 +28,7 @@
 			</div>
 			<div class="form-group">
 				<label>Ngày nhập</label>
-				<form:input path="productDate" class="form-control" />
+				<form:input path="productDate" id="datepicker" class="form-control" />
 			</div>
 			<div class="form-group">
 				<label>Lượt xem</label>
@@ -35,26 +37,26 @@
 			<div class="form-group">
 				<label>Đặt biệt?</label>
 				<div class="form-control">
-					<form:radiobutton path="special" value="true" label="Yes"/>
-					<form:radiobutton path="special" value="false" label="No"/>
+					<form:radiobutton path="special" value="true" label="Yes" />
+					<form:radiobutton path="special" value="false" label="No" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label>Loại</label>
 				<form:select path="category.id">
-					<form:options items="${cates}" itemLabel="name" itemValue="id"/>
+					<form:options items="${cates}" itemLabel="name" itemValue="id" />
 				</form:select>
 			</div>
 			<div class="form-group">
 				<label>Trạng thái</label>
 				<div class="form-control">
-					<form:radiobutton path="available" value="true" label="Còn"/>
-					<form:radiobutton path="available" value="false" label="Hết hàng"/>
+					<form:radiobutton path="available" value="true" label="Còn" />
+					<form:radiobutton path="available" value="false" label="Hết hàng" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label>Ảnh</label>
-				<input type="file" name="image-file" class="form-control"/>
+				<label>Ảnh</label> <input type="file" name="image-file"
+					class="form-control" />
 				<form:hidden path="image" />
 			</div>
 			<div class="form-group">
@@ -72,6 +74,13 @@
 	</div>
 </div>
 
- <script type="text/javascript">
-        bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
-  </script>
+<script type="text/javascript">
+	//nicEdit
+	bkLib.onDomLoaded(function() {
+		nicEditors.allTextAreas()
+	});
+	//datepiker
+	$(function() {
+		$("#datepicker").datepicker();
+	});
+</script>

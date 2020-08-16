@@ -16,5 +16,7 @@ public interface OrderDAO {
 	void create(Order order, List<OrderDetail> details);
 	List<Order> findByUser(Customer user);
 	List<Product> findItemsByUser(Customer user);
+	long getPageCount(int pageSize);
+	List<Order> getPage(int pageNo, int pageSize);
 
 }

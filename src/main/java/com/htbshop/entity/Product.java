@@ -16,6 +16,8 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Products")
 public class Product {
@@ -37,10 +39,12 @@ public class Product {
 	Integer viewCount;
 	Boolean special;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "categoryId")
 	Category category;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<OrderDetail> orderDetails;
 

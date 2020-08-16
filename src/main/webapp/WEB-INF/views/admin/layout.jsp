@@ -3,14 +3,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Trang quản trị</title>
+<title>HTBStore-Trang quản trị</title>
 <tiles:insertAttribute name="head" />
 </head>
 <body>
 
 	<div class="container">
 		<header class="row">
-			<h1 class= "alert alert-success">Trang quản trị</h1>
+			<h1 class= "alert alert-success">HTBStore-Trang quản trị</h1>
 
 		</header>
 		<nav class="row">

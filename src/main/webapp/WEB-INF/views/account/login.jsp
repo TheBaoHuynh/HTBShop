@@ -5,17 +5,17 @@
 <h4>${msg}</h4>
 <form action="/account/login" method="POST">
 <div class="form-group">
-	<label>Ten dang nhap</label> <input name="id" class="form-control" value="${uid}">
+	<label>Tên đăng nhập</label> <input name="id" class="form-control" value="${uid}">
 </div>
 <div class="form-group">
-	<label>Mat khau</label> <input name="pw" class="form-control" value="${pwd}">
+	<label>Mật khẩu</label> <input name="pw" class="form-control" value="${pwd}">
 </div>
 <div class="form-group">
 	<div class="form-control">
-		<label>Nho mat khau?</label> <input name="rm" type="checkbox">
+		<label>Nhớ mật khẩu</label> <input name="rm" type="checkbox">
 	</div>
 </div>
 <div class="form-group">
-	<button class="btn-login">Dang nhap</button>
+	<button class="btn-login">Đăng nhập</button>
 </div>
 </form>

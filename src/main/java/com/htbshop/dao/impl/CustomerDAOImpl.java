@@ -17,12 +17,12 @@ import com.htbshop.entity.Customer;
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
 	@Autowired
-	SessionFactory fatory;
+	SessionFactory factory;
 
 	@Override
 	public Customer findById(String id) {
 		// TODO Auto-generated method stub
-		Session session = fatory.getCurrentSession();
+		Session session = factory.getCurrentSession();
 		Customer entity = session.find(Customer.class, id);
 		return entity;
 	}
@@ -31,7 +31,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public List<Customer> findAll() {
 		// TODO Auto-generated method stub
 		String hql = "FROM Customer";
-		Session session = fatory.getCurrentSession();
+		Session session = factory.getCurrentSession();
 		TypedQuery<Customer> query = session.createQuery(hql, Customer.class);
 		List<Customer> list = query.getResultList();
 		return list;
@@ -41,7 +41,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public Customer create(Customer entity) {
 		
 		// TODO Auto-generated method stub
-		Session session = fatory.getCurrentSession();
+		Session session = factory.getCurrentSession();
 		session.save(entity);
 		return entity;
 	}
@@ -49,7 +49,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	@Override
 	public void update(Customer entity) {
 		// TODO Auto-generated method stub
-		Session session = fatory.getCurrentSession();
+		Session session = factory.getCurrentSession();
 		session.update(entity);
 		
 	}
@@ -57,10 +57,33 @@ public class CustomerDAOImpl implements CustomerDAO {
 	@Override
 	public Customer delete(String id) {
 		// TODO Auto-generated method stub
-		Session session = fatory.getCurrentSession();
+		Session session = factory.getCurrentSession();
 		Customer entity = session.find(Customer.class, id);
 		session.delete(entity);
 		return entity;
+	}
+
+	@Override
+	public long getPageCount(int pageSize) {
+		// TODO Auto-generated method stub
+		String hql = "SELECT count(c) FROM Customer c";
+		Session session = factory.getCurrentSession();
+		TypedQuery<Long> query = session.createQuery(hql, Long.class);
+		Long rowCount = query.getSingleResult();
+		long pageCount = (long) Math.ceil(1.0*rowCount/pageSize);
+		return pageCount;
+	}
+
+	@Override
+	public List<Customer> getPage(int pageNo, int pageSize) {
+		// TODO Auto-generated method stub
+		String hql = "FROM Customer";
+		Session session = factory.getCurrentSession();
+		TypedQuery<Customer> query = session.createQuery(hql, Customer.class);
+		query.setFirstResult(pageNo*pageSize);
+		query.setMaxResults(pageSize);
+		List<Customer> list = query.getResultList();
+		return list;
 	}
 
 }

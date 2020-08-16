@@ -14,5 +14,7 @@ public interface ProductDAO {
 	List<Product> findByCategoryId(Integer categoryId);
 	List<Product> findByIds(String ids);
 	List<Product> findBySpecial(Integer id);
+	long getPageCount(int pageSize);
+	List<Product> getPage(int pageNo, int pageSize);
 
 }

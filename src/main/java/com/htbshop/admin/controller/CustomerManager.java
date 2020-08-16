@@ -2,9 +2,11 @@ package com.htbshop.admin.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -41,19 +44,21 @@ public class CustomerManager {
 		model.addAttribute("list", dao.findAll());
 		return "admin/customer/index";
 	}
-	//them danh muc
+	//them user
 	@RequestMapping("/admin/customer/create")
 	public String create(RedirectAttributes model,
-			@ModelAttribute("entity") Customer entity,
+			@ModelAttribute("entity") Customer user,
 			@RequestParam("photo-file") MultipartFile file) throws IllegalStateException, IOException {
 		if(file.isEmpty()) {
-			entity.setPhoto("user.png");
+			user.setPhoto("user.png");
 		}else {
-			entity.setPhoto(file.getOriginalFilename());
-			String path = app.getRealPath("/static/images/customers/" + entity.getPhoto());
+			user.setPhoto(file.getOriginalFilename());
+			String path = app.getRealPath("/static/images/customers/" + user.getPhoto());
 			file.transferTo(new File(path));
 		}
-		dao.create(entity);
+		String hash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
+		user.setPassword(hash);
+		dao.create(user);
 		model.addAttribute("msg", "Thêm thành công");
 		return "redirect:/admin/customer/index";
 	}
@@ -79,5 +84,19 @@ public class CustomerManager {
 		dao.delete(id);
 		model.addAttribute("msg", "Xóa thành công");
 		return "redirect:/admin/customer/index";
+	}
+	
+	//phan trang
+	int pageSize = 5;
+	@ResponseBody
+	@RequestMapping("/pager/customer/page-count")
+	public long pageCount() {
+		return dao.getPageCount(pageSize);
+	}
+	@ResponseBody
+	@RequestMapping("/pager/customer/page/{pageNo}")
+	public List<Customer> getPage(@PathVariable("pageNo") int pageNo) {
+		List<Customer> list =  dao.getPage(pageNo, pageSize);
+		return list;
 	}
 }
