@@ -12,20 +12,7 @@
 		</tr>
 	</thead>
 	<tbody id="tbody">
-<%-- 	<c:forEach var="e" items="${list}">
-		<tr>
-			<td>${e.id}</td>
-			<td>${e.name}</td>
-			<td>${e.unitPrice}</td>
-			<td>${e.discount}</td>
-			<td>${e.quantity}</td>
-			<td>${e.productDate}</td>
-			<td>
-				<a class="btn btn-sm btn-danger" href="${base}/delete/${e.id}">Xóa</a>
-				<a class="btn btn-sm btn-info" href="${base}/edit/${e.id}">Sửa</a>
-			</td>
-		</tr>
-	</c:forEach> --%>
+		<!--Bo noi dung vo  -->
 	</tbody>
 </table>
 
@@ -98,7 +85,7 @@ $(function() {
 				var td = $("<td/>").html(product.id).appendTo(tr);
 				var td = $("<td/>").html(product.name).appendTo(tr);
 				var td = $("<td/>").html(product.unitPrice).appendTo(tr);
-				var td = $("<td/>").html(product.discount).appendTo(tr);
+				var td = $("<td/>").html(product.discount * 100).appendTo(tr);
 				var td = $("<td/>").html(product.quantity).appendTo(tr);
 				var td = $("<td/>").html(product.productDate).appendTo(tr);
 				var s = `<td class="text-center">

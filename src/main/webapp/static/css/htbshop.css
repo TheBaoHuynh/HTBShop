@@ -22,3 +22,16 @@
 .thumb-img:hover {
 	box-shadow: 0px 0px 2px red;
 }
+.slide-pro {
+	height: 350px !important;
+	max-width: 100%;
+	
+}
+.pro-icon-wraper{
+	position: relative;
+}
+.pro-icon{
+	position: absolute;
+	top:0px;
+	right: 0px;
+}

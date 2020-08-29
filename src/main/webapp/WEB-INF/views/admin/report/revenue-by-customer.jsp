@@ -36,9 +36,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div id="tab2" class="tab-pane fade">
-		<jsp:include page="_revenue_customer_chart.jsp"></jsp:include>
-	</div>
+	
 </div>
 
 

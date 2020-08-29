@@ -50,6 +50,7 @@ $(document).ready(function() {
 		$("style#cart-css").html(cart_css);
 		img.effect('transfer', options, 1000);
 //		alert(img.attr("src"));
+	
 	});
 	
 	$(".btn-star").click(function() {
@@ -65,4 +66,5 @@ $(document).ready(function() {
 			}
 		})
 	});
+	
 });

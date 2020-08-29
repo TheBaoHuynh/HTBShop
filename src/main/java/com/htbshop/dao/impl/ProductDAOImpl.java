@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.htbshop.dao.ProductDAO;
-import com.htbshop.entity.Customer;
 import com.htbshop.entity.Product;
 
 @Transactional
@@ -70,6 +69,7 @@ public class ProductDAOImpl implements ProductDAO {
 		Session session = factory.getCurrentSession();
 		TypedQuery<Product> query = session.createQuery(hql, Product.class);
 		query.setParameter("cid", categoryId);
+		query.setMaxResults(12);
 		List<Product> list = query.getResultList();
 		return list;
 	}
@@ -88,9 +88,10 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public List<Product> findByIds(String ids) {
 		String hql = "FROM Product p WHERE p.id in (" + ids + ")";
-		System.out.println(hql);
+		System.out.println("yeu thich" + hql);
 		Session session = factory.getCurrentSession();
 		TypedQuery<Product> query = session.createQuery(hql, Product.class);
+		query.setMaxResults(10);
 		List<Product> list = query.getResultList();
 		return list;
 	}
@@ -135,7 +136,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public List<Product> getPage(int pageNo, int pageSize) {
 		// TODO Auto-generated method stub
-		String hql = "FROM Product";
+		String hql = "FROM Product p ORDER BY p.productDate DESC";
 		Session session = factory.getCurrentSession();
 		TypedQuery<Product> query = session.createQuery(hql, Product.class);
 		query.setFirstResult(pageNo*pageSize);

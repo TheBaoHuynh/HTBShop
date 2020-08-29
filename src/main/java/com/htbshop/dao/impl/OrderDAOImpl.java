@@ -112,7 +112,7 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> getPage(int pageNo, int pageSize) {
 		// TODO Auto-generated method stub
-		String hql = "FROM Order";
+		String hql = "FROM Order o ORDER BY o.orderDate DESC";
 		Session session = factory.getCurrentSession();
 		TypedQuery<Order> query = session.createQuery(hql, Order.class);
 		query.setFirstResult(pageNo*pageSize);

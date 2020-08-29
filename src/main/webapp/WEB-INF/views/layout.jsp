@@ -7,30 +7,27 @@
 <tiles:insertAttribute name="head" />
 </head>
 <body>
-
-	<div class="container">
-		<header class="row">
-			<h1>HTBStore</h1>
-
-		</header>
-		<nav class="row">
-			<tiles:insertAttribute name="menu" />
-		</nav>
-		<div class="row">
-			<article class="col-sm-9">
-				<tiles:insertAttribute name="body"/>
-				
-			</article>
-			<aside class="col-sm-3">
-				<tiles:insertAttribute name="aside" />
-
-			</aside>
-		</div>
-	<footer>
-			<p class="text-center">&copy;2020 by Huynh The Bao</p>
-	</footer>
-		
+	<header>
+		<tiles:insertAttribute name="menu" />
+	</header>
+	<div class="section">
+		<tiles:insertAttribute name="body" />
 	</div>
 
+	<footer id="footer" class="section section-grey">
+		<tiles:insertAttribute name="footer" />
+	</footer>
 </body>
+	<!-- jQuery Plugins -->
+	<script src="/static/themeplate/js/jquery.min.js"></script>
+	<script src="/static/themeplate/js/bootstrap.min.js"></script>
+	<script src="/static/themeplate/js/slick.min.js"></script>
+	<script src="/static/themeplate/js/nouislider.min.js"></script>
+	<script src="/static/themeplate/js/jquery.zoom.min.js"></script>
+	<script src="/static/themeplate/js/main.js"></script>
+	<script src="/static/themeplate/js/jquery.validate.min.js"></script>
+	
+	  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </html>

@@ -2,6 +2,7 @@ package com.htbshop.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
@@ -9,7 +10,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,13 +44,14 @@ public class AccountController {
 	@Autowired
 	HttpServletRequest request;
 
+
 	@GetMapping("/account/login")
 	public String login(Model model) {
 		Cookie ckid = cookie.read("userId");
 		Cookie ckpw = cookie.read("pass");
 		if (ckid != null) {
 			String uid = ckid.getValue();
-			String pwd = ckpw.getValue();
+			String pwd = new String(Base64.getDecoder().decode(ckpw.getValue()));
 
 			model.addAttribute("uid", uid);
 			model.addAttribute("pwd", pwd);
@@ -63,18 +64,16 @@ public class AccountController {
 	public String login(Model model, @RequestParam("id") String id, @RequestParam("pw") String pw,
 			@RequestParam(value = "rm", defaultValue = "false") boolean rm) {
 		Customer user = dao.findById(id);
-		
 		if (user == null) {
 			model.addAttribute("msg", "Tên đăng nhập hoặc mật khẩu không đúng");
-		} else if (!BCrypt.checkpw(pw, user.getPassword())) {
+		} else if (!pw.equals(new String(Base64.getDecoder().decode(user.getPassword())))) {
 			model.addAttribute("msg", "Tên đăng nhập hoặc mật khẩu không đúng");
 		} else if (!user.getActivated()) {
 			model.addAttribute("msg", "Tài khoản không tồn tại, bạn chưa có tài khoản?");
 		} else {
 			model.addAttribute("msg", "Đăng nhập thành công");
 			session.setAttribute("user", user);
-			
-		
+
 			// ghi nho bang cookie
 			if (rm == true) {
 				cookie.create("userId", user.getId(), 30);
@@ -83,16 +82,17 @@ public class AccountController {
 				cookie.delete("userId");
 				cookie.delete("pass");
 			}
-			
+
 			// quay lai trang duoc bao ve ( neu co)
 			String backUri = (String) session.getAttribute("back-uri");
 			if (backUri != null) {
 				return "redirect:" + backUri;
 			}
-			if(user.getAdmin() == true) {
-				return "redirect:../admin/home/index";
-			}
+			if (user.getAdmin() == true) {
+				return "redirect:../admin/category/index";
+			}else {
 			return "redirect:/home/index";
+			}
 		}
 		return "account/login";
 	}
@@ -120,7 +120,7 @@ public class AccountController {
 		} else {
 			Customer user2 = dao.findById(user.getId());
 			if (user2 != null) {
-				model.addAttribute("msg", "Tên đã được sử dụng");
+				model.addAttribute("msg", "Tên đăng nhập đã được sử dụng");
 				return "account/register";
 			}
 		}
@@ -132,7 +132,8 @@ public class AccountController {
 			file.transferTo(f);
 			user.setPhoto(f.getName());
 		}
-		String hash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
+		String pass = user.getPassword();
+		String hash = Base64.getEncoder().encodeToString(pass.getBytes());
 		user.setPassword(hash);
 		user.setActivated(false);
 		user.setAdmin(false);
@@ -171,16 +172,17 @@ public class AccountController {
 		} else if (!email.equals(user.getEmail())) {
 			model.addAttribute("msg", "Email không đúng");
 		} else {
-
+			String pass = new String(Base64.getDecoder().decode(user.getPassword()));
 			String form = "16130294@st.hcmuaf.edu.vn";
 			String to = user.getEmail();
 			String subject = "Welcome";
-			String body = "Mật khẩu của bạn là: " + user.getPassword();
+			String body = "Mật khẩu của bạn là: " + pass + ". Hãy thay đổi mật khẩu để đảm bảo an toàn.";
 			MailInfo mail = new MailInfo(form, to, subject, body);
 			mailer.send(mail);
 			model.addAttribute("msg", "Mật khẩu đã được gửi vào email của bạn");
 		}
-		return "redirect:/account/login";
+//		return "redirect:/account/login";
+		return "account/forgot";
 	}
 
 	// doi mat khau

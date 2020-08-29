@@ -44,6 +44,8 @@ public class Product {
 	@JoinColumn(name = "categoryId")
 	Category category;
 	
+	
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<OrderDetail> orderDetails;

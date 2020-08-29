@@ -22,7 +22,6 @@ public class OderDetailDAOImpl implements OrderDetailDAO {
 
 	@Override
 	public OrderDetail findById(Integer id) {
-		// TODO Auto-generated method stub
 		Session session = fatory.getCurrentSession();
 		OrderDetail entity = session.find(OrderDetail.class, id);
 		return entity;
@@ -30,7 +29,6 @@ public class OderDetailDAOImpl implements OrderDetailDAO {
 
 	@Override
 	public List<OrderDetail> findAll() {
-		// TODO Auto-generated method stub
 		String hql = "FROM OrderDetail";
 		Session session = fatory.getCurrentSession();
 		TypedQuery<OrderDetail> query = session.createQuery(hql, OrderDetail.class);
@@ -40,8 +38,6 @@ public class OderDetailDAOImpl implements OrderDetailDAO {
 
 	@Override
 	public OrderDetail create(OrderDetail entity) {
-		
-		// TODO Auto-generated method stub
 		Session session = fatory.getCurrentSession();
 		session.save(entity);
 		return entity;
@@ -57,7 +53,6 @@ public class OderDetailDAOImpl implements OrderDetailDAO {
 
 	@Override
 	public OrderDetail delete(Integer id) {
-		// TODO Auto-generated method stub
 		Session session = fatory.getCurrentSession();
 		OrderDetail entity = session.find(OrderDetail.class, id);
 		session.delete(entity);

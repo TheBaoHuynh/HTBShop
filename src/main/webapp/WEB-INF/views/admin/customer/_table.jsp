@@ -11,19 +11,7 @@
 		</tr>
 	</thead>
 	<tbody id="tbody">
-<%-- 	<c:forEach var="e" items="${list}">
-		<tr>
-			<td>${e.id}</td>
-			<td>${e.fullname}</td>
-			<td>${e.email}</td>
-			<td>${e.activated ? 'Đã kích hoat':'Chưa kích hoạt'}</td>
-			<td>${e.admin ? 'Adminstrator':'Khách hàng'}</td>
-			<td>
-				<a class="btn btn-sm btn-danger" href="${base}/delete/${e.id}">Xóa</a>
-				<a class="btn btn-sm btn-info" href="${base}/edit/${e.id}">Sửa</a>
-			</td>
-		</tr>
-	</c:forEach> --%>
+	
 	</tbody>
 </table>
 <!--phan trang  -->

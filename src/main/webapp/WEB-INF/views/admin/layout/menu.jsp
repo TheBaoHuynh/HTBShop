@@ -26,7 +26,6 @@
 					<li><a href="/admin/revenue/month">Danh số theo tháng</a></li>
 				</ul>
 			</li>
-			<li><a href="#">Tài khoản</a></li>
 		</ul>
 	</div>
 </nav>

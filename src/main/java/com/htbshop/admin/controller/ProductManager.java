@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.htbshop.dao.ProductDAO;
-import com.htbshop.entity.Customer;
 import com.htbshop.entity.Product;
 
 @Controller

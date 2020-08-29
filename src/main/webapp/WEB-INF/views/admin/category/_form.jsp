@@ -10,7 +10,9 @@
 			</div>
 			<div class="form-group">
 				<label>Tên danh mục</label>
-				<form:input path="name" class="form-control" />
+				<form:input path="name" class="form-control" required="required" 
+							oninvalid="this.setCustomValidity('Vui lòng nhập đúng yêu cầu')"
+							onkeyup="setCustomValidity('')"/>
 			</div>
 			<div class="form-group">
 				<button class="btn btn-primary" formaction="${base}/create">Thêm</button>

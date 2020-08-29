@@ -19,9 +19,6 @@
 		<div class="row">
 				<tiles:insertAttribute name="body"/>
 		</div>
-	<footer>
-			<p class="text-center">&copy;2020 by Huynh The Bao</p>
-	</footer>
 		
 	</div>
 

@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.htbshop.dao.OrderDAO;
 import com.htbshop.dao.OrderDetailDAO;
-import com.htbshop.entity.Customer;
 import com.htbshop.entity.Order;
 
 @Controller

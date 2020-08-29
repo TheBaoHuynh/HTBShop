@@ -13,15 +13,15 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-@Entity @Table(name="Customers")
+@Entity
+@Table(name = "Customers")
 public class Customer {
 	@Id
 	@NotEmpty(message = "Không để trống tên đăng nhập")
 	String id;
-	@Length(min=6, max =60, message = "Mật khải phải từ 6 đến 20 kí tự" )
+	@Length(min = 6, max = 60, message = "Mật khải phải từ 6 đến 20 kí tự")
 	String password;
-	@NotEmpty
+	@NotEmpty(message = "Không để trống họ tên")
 	String fullname;
 	@NotEmpty(message = "Không để trống email")
 	@Email(message = "Email không hợp lệ")
@@ -29,10 +29,15 @@ public class Customer {
 	String photo;
 	Boolean activated;
 	Boolean admin;
-	//bo link qua don hang khi truy xuat ajax
+	// bo link qua don hang khi truy xuat ajax
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer")
 	List<Order> orders;
+
+	// phan quyen
+//	@ManyToMany
+//	@JoinTable(name = "UserRole", joinColumns = @JoinColumn(name="UserId"), inverseJoinColumns = @JoinColumn(name= "RoleId"))
+
 
 	public String getId() {
 		return id;
@@ -81,7 +86,6 @@ public class Customer {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
-	
 
 	public Boolean getActivated() {
 		return activated;
@@ -98,6 +102,5 @@ public class Customer {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
-	
 
 }

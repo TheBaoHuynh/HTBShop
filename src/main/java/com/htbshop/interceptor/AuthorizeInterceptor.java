@@ -17,7 +17,10 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// TODO Auto-generated method stub
+		
+		//kiem tra trong session co user chưa
 		HttpSession session = request.getSession();
+		//lay user ra
 		Customer user = (Customer) session.getAttribute("user");
 		if(user == null) {
 			session.setAttribute("back-uri", request.getRequestURI());

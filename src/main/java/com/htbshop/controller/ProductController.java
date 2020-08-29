@@ -28,6 +28,7 @@ public class ProductController {
 	public String listByCategory(Model model, @PathVariable("cid") Integer categoryId) {
 		List<Product> list = pdao.findByCategoryId(categoryId);
 		model.addAttribute("list", list);
+		model.addAttribute("title", "Danh mục ");
 		return "product/list";
 		
 	}
@@ -36,6 +37,7 @@ public class ProductController {
 	public String listByKeyword(Model model, @RequestParam("keywords") String keywords) {
 		List<Product> list = pdao.findByKeywords(keywords);
 		model.addAttribute("list", list);
+		model.addAttribute("title", "Kết quả tìm kiếm");
 		return "product/list";
 		
 	}
@@ -51,20 +53,24 @@ public class ProductController {
 	public String detail(Model model, @PathVariable("id") Integer id) {
 		Product p = pdao.findById(id);
 		model.addAttribute("p", p);
-		
+		model.addAttribute("title", "Chi tiết sản phẩm");
 		//dem so lan xem
 		p.setViewCount(p.getViewCount() +1);
+		pdao.update(p);
+		
+		//san phan tuong tu
 		List<Product> list = pdao.findByCategoryId(p.getCategory().getId());
+		
 		model.addAttribute("list", list);
 		
-		//hang yeu thich
+		//san pham yeu thich
 		Cookie favo = cookie.read("favo");
 		if(favo !=null) {
 			String ids = favo.getValue();
 			List<Product> favo_list = pdao.findByIds(ids);
-			model.addAttribute("favo", favo_list);
+			model.addAttribute("favote", favo_list);
 		}
-		//hang da xem
+		//san pham da xem
 		Cookie viewed = cookie.read("viewed"); //lay cookie tu client
 		String value =id.toString();
 		if(viewed != null) {
@@ -85,13 +91,13 @@ public class ProductController {
 		if(favo != null) {
 			value = favo.getValue(); //neu co lay gia tri cookie coi co id do chua
 			if(!value.contains(id.toString())) {
-				value += "," +id.toString();
+				value = value + "," + id.toString();
 			}else {
 				return false;
 			}
 			
 		}
-		favo = cookie.create("favo", id.toString(), 30);
+		favo = cookie.create("favo", value, 30);
 		return true;
 		
 	}

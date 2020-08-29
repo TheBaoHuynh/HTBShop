@@ -79,6 +79,7 @@ public class OrderController {
 		Customer user = (Customer) session.getAttribute("user");
 		List<Product> list = dao.findItemsByUser(user);
 		model.addAttribute("list", list);
+		model.addAttribute("title", "Hàng đã mua");
 		return "product/list";
 	}
 

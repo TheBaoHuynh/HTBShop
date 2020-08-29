@@ -9,9 +9,9 @@
 			<th>Danh mục</th>
 			<th>Số lượng</th>
 			<th>Giá trị</th>
-			<th>Min</th>
-			<th>Max</th>
-			<th>Avg</th>
+			<th>Giá thấp nhất</th>
+			<th>Giá cao nhất</th>
+			<th>Giá trung bình</th>
 		</tr>
 	</thead>
 	<tbody>

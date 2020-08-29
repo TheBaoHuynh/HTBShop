@@ -21,7 +21,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public Category findById(Integer id) {
-		// TODO Auto-generated method stub
 		Session session = fatory.getCurrentSession();
 		Category entity = session.find(Category.class, id);
 		return entity;
@@ -29,7 +28,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public List<Category> findAll() {
-		// TODO Auto-generated method stub
 		String hql = "FROM Category";
 		Session session = fatory.getCurrentSession();
 		TypedQuery<Category> query = session.createQuery(hql, Category.class);
@@ -39,8 +37,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public Category create(Category entity) {
-		
-		// TODO Auto-generated method stub
 		Session session = fatory.getCurrentSession();
 		session.save(entity);
 		return entity;
@@ -48,7 +44,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public void update(Category entity) {
-		// TODO Auto-generated method stub
 		Session session = fatory.getCurrentSession();
 		session.update(entity);
 		
@@ -56,7 +51,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public Category delete(Integer id) {
-		// TODO Auto-generated method stub
 		Session session = fatory.getCurrentSession();
 		Category entity = session.find(Category.class, id);
 		session.delete(entity);
